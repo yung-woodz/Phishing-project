@@ -1,4 +1,8 @@
-const nodemailer = require("nodemailer");
+//const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
+
+const userGmail = "trabajo01!@gmail.com"
+const passGmail = "proof"
 
 // Create a transporter for SMTP
 const transporter = nodemailer.createTransport({
