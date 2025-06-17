@@ -18,7 +18,7 @@ export const sendEmail = async (to, subject, text, html) => {
 
         const mailOptions = {
 
-            from: `"Teoría del mish" <${emailConfig.user}>`,
+            from: `"Diego Antonio Vargas Gomez" <${emailConfig.user}>`,
             to: to,
             subject: subject,
             text: text,
