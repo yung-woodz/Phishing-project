@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import morgan from "morgan";
 import indexRoutes from "../src/routes/index.routes.js";
 import { PORT, HOST } from "../src/config/configEnv.js"
@@ -6,6 +7,7 @@ import { PORT, HOST } from "../src/config/configEnv.js"
 
 async function setupServer() {
   const app = express();
+  app.use(cors());
   app.disable("x-powered-by");
 
   app.use(express.json());

