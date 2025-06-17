@@ -18,7 +18,7 @@ export const sendCustomEmail = async (req, res) => {
     const campaignId = "camp1";
     const userId = encodeURIComponent(email);
 
-    const trackingLink = `http://localhost:3000/api/email/track/${campaignId}/${userId}`;
+    const trackingLink = `http://146.83.198.35:1606/api/email/track/${campaignId}/${userId}`;
 
     const htmlMessage = `
         <p>${message}</p>
