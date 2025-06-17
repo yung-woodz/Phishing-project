@@ -52,9 +52,18 @@ export const trackClick = (req, res) => {
     const logLine = `${timestamp} | Campaign: ${campaignId} | User: ${userId} | IP: ${ip} | Agent: ${userAgent}\n`;
 
     const logPath = path.resolve("logs", "clicks.log");
-    fs.mkdirSync("logs", { recursive: true }); // asegura carpeta
+
+    fs.mkdirSync("logs", { recursive: true });
+
     fs.appendFile(logPath, logLine, (err) => {
-        if (err) console.error("❌ Error al registrar clic:", err);
+        if (err) {
+          console.error("Error al registrar clic:", err);  
+        } else {
+
+            console.log("Click registrado!!");
+            console.log(logLine);
+
+        }
     });
 
     res.redirect("https://www.youtube.com/watch?v=zHDLUbssMIw"); // link de prueba
