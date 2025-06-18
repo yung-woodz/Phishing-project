@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import { emailConfig } from "../config/configEnv.js";
 
-export const sendEmail = async (to, subject, text, html) => {
+export const sendEmail = async (from, to, subject, text, html) => {
 
 
     try{
@@ -18,7 +18,7 @@ export const sendEmail = async (to, subject, text, html) => {
 
         const mailOptions = {
 
-            from: `"Diego Antonio Vargas Gomez" <${emailConfig.user}>`,
+            from: from,
             to: to,
             subject: subject,
             text: text,

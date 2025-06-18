@@ -9,26 +9,25 @@ function LoginFake() {
     e.preventDefault();
 
     const response = await fetch("http://localhost:3000/api/email/login-simulacion", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ rut, password }),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ rut, password }),
     });
 
     const data = await response.json();
     if (response.ok) {
-        
-        setMensaje('datos enviados');
-        setRut('');
-        setPassword('');
+      setMensaje('datos enviados');
+      setRut('');
+      setPassword('');
 
-        const link = "https://www.youtube.com/watch?v=zHDLUbssMIw"
+      const link = "https://www.youtube.com/watch?v=zHDLUbssMIw"
         
-        window.open(link, "_blank");
+      window.open(link, "_blank");
 
     } else {
-        setMensaje('Error al enviar!!');
+      setMensaje('Error al enviar!!');
     }
   };
 

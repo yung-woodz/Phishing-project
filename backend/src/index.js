@@ -7,7 +7,10 @@ import { PORT, HOST } from "../src/config/configEnv.js"
 
 async function setupServer() {
   const app = express();
-  app.use(cors());
+  app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  }));
   app.disable("x-powered-by");
 
   app.use(express.json());
@@ -16,7 +19,7 @@ async function setupServer() {
   app.use("/api", indexRoutes);
 
   app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://${HOST}:${PORT}/`);
+    console.log(`Servidor corriendo en http://${HOST}:${PORT}/api`);
   });
 }
 
