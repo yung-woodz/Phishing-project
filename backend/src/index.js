@@ -17,6 +17,7 @@ async function setupServer() {
   app.use(morgan("dev"));
 
   app.use("/api", indexRoutes);
+  app.use('/public', express.static('public'));
 
   app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://${HOST}:${PORT}/api`);

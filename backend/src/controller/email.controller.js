@@ -3,7 +3,7 @@ import path from "path";
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { emailConfig } from "../config/configEnv.js";
-import { sendEmail } from "../services/email.services.js";
+import { sendEmail } from "../services/email.service.js";
 import {
     handleErrorServer,
     handleSuccess,
@@ -72,7 +72,8 @@ export const trackClick = (req, res) => {
         }
     });
 
-    res.redirect("http://localhost:5173/fake-login"); // link de prueba
+    const redirectURL = `http://localhost:5173/${campaignId}/index.html`;
+    res.redirect(redirectURL);
 };
 
 export const simularLogin = (req, res) => {
