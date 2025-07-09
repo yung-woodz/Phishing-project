@@ -40,10 +40,17 @@ const navItems: NavItem[] = [
   {
     icon: <UserCircleIcon />,
     name: "User Profile",
-    path: "/profile",
+    path: /* "/profile" */"/error-404",
   },
-
   {
+    name: "Campaign",
+    icon: <PageIcon />,
+    subItems: [
+      { name: "Create Phishing", path: "/create-phishing", pro: false },
+      { name: "History", path: "/error-404", pro: false },
+    ],
+  },
+ /*  {
     name: "Forms",
     icon: <ListIcon />,
     subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
@@ -53,26 +60,19 @@ const navItems: NavItem[] = [
     icon: <TableIcon />,
     subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
   },
-  {
-    name: "Pages",
-    icon: <PageIcon />,
-    subItems: [
-      { name: "Blank Page", path: "/blank", pro: false },
-      { name: "404 Error", path: "/error-404", pro: false },
-    ],
-  },
+   */
 ];
 
 const othersItems: NavItem[] = [
-  {
+  /* {
     icon: <PieChartIcon />,
     name: "Charts",
     subItems: [
       { name: "Line Chart", path: "/line-chart", pro: false },
       { name: "Bar Chart", path: "/bar-chart", pro: false },
     ],
-  },
-  {
+  }, */
+  /* {
     icon: <BoxCubeIcon />,
     name: "UI Elements",
     subItems: [
@@ -83,15 +83,15 @@ const othersItems: NavItem[] = [
       { name: "Images", path: "/images", pro: false },
       { name: "Videos", path: "/videos", pro: false },
     ],
-  },
-  {
+  }, */
+  /* {
     icon: <PlugInIcon />,
     name: "Authentication",
     subItems: [
       { name: "Sign In", path: "/signin", pro: false },
       { name: "Sign Up", path: "/signup", pro: false },
     ],
-  },
+  }, */
 ];
 
 const AppSidebar: React.FC = () => {
@@ -308,7 +308,7 @@ const AppSidebar: React.FC = () => {
           !isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
         }`}
       >
-        <Link href="/">
+        {/* <Link href="/">
           {isExpanded || isHovered || isMobileOpen ? (
             <>
               <Image
@@ -334,7 +334,7 @@ const AppSidebar: React.FC = () => {
               height={32}
             />
           )}
-        </Link>
+        </Link> */}
       </div>
       <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
         <nav className="mb-6">
@@ -356,7 +356,7 @@ const AppSidebar: React.FC = () => {
               {renderMenuItems(navItems, "main")}
             </div>
 
-            <div className="">
+            {/* <div className="">
               <h2
                 className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
                   !isExpanded && !isHovered
@@ -371,7 +371,7 @@ const AppSidebar: React.FC = () => {
                 )}
               </h2>
               {renderMenuItems(othersItems, "others")}
-            </div>
+            </div> */}
           </div>
         </nav>
         {isExpanded || isHovered || isMobileOpen ? <SidebarWidget /> : null}

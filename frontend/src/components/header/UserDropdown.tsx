@@ -18,7 +18,7 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
   }
   return (
     <div className="relative">
-      <button
+      {/* <button
         onClick={toggleDropdown} 
         className="flex items-center text-gray-700 dark:text-gray-400 dropdown-toggle"
       >
@@ -51,7 +51,7 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
             strokeLinejoin="round"
           />
         </svg>
-      </button>
+      </button> */}
 
       <Dropdown
         isOpen={isOpen}
