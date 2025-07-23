@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.post("/send", sendCustomEmail);
 router.get("/track/:campaignId/:userId", trackClick);
-router.post("/login-simulacion", simularLogin);
+router.post("/login-simulacion", simularLogin); // no sirve
 
 export default router;

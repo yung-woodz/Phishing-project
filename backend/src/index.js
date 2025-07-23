@@ -3,12 +3,12 @@ import cors from "cors";
 import morgan from "morgan";
 import indexRoutes from "../src/routes/index.routes.js";
 import { PORT, HOST } from "../src/config/configEnv.js"
-/* import { connectDB } from "../src/config/configDb.js"; */
+import { connectDB } from "../src/config/configDb.js";
 
 async function setupServer() {
   const app = express();
   app.use(cors({
-    origin: /* "http://146.83.198.35:1607" */"http://${HOST}:${PORT}",
+    origin: "http://146.83.198.35:1607",
     credentials: true,
   }));
   app.disable("x-powered-by");
@@ -26,7 +26,7 @@ async function setupServer() {
 
 async function setupAPI() {
   try {
-    /* await connectDB(); */
+    await connectDB();
     await setupServer();
   } catch (error) {
     console.error("Error en index.js -> setupAPI(): ", error);

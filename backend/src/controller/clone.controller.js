@@ -2,12 +2,24 @@ import puppeteer from 'puppeteer';
 import fs from 'fs';
 import path from 'path';
 import { exec } from 'child_process'; // PRUEBA
-import { HOST } from '../config/configEnv';
+import { HOST } from '../config/configEnv.js';
+import { AppDataSource } from '../config/configDb.js';
+import CampaignSchema from '../entity/campaign.entity.js';
 
 export const clonePage = async (req, res) => {
     try {
         const { name, url } = req.body;
         if (!name || !url) return res.status(400).json({ message: 'name y url requeridos' });
+
+        const campaignRepository = AppDataSource.getRepository(CampaignSchema.options.name);
+
+        const newCampaign = campaignRepository.create({
+            campaignName: name,
+            pageUrl: url,
+        });
+
+        await campaignRepository.save(newCampaign);
+        console.log(`Campaña '${name}' guardada en la DB con ID: ${newCampaign.id}`);
 
         const browser = await puppeteer.launch({
 		args: ['--no-sandbox', '--disable-setid-sandbox']
