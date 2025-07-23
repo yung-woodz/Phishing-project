@@ -21,7 +21,7 @@ export const sendCustomEmail = async (req, res) => {
     const campaignId = "camp1";
     const userId = encodeURIComponent(email);
 
-    const trackingLink = `http://localhost:3000/api/email/track/${campaignId}/${userId}`;
+    const trackingLink = `http://146.83.198.35:80/api/email/track/${campaignId}/${userId}`;
 
     const htmlMessage = `
         <p>${message}</p>
@@ -72,7 +72,7 @@ export const trackClick = (req, res) => {
         }
     });
 
-    const redirectURL = `http://localhost:5173/${campaignId}/index.html`;
+    const redirectURL = `http://146.83.198.35:1607/${campaignId}/index.html`;
     res.redirect(redirectURL);
 };
 

@@ -3,23 +3,23 @@ import React, { useState } from 'react';
 import ComponentCard from '../../common/ComponentCard';
 import Label from '../Label';
 import Input from '../input/InputField';
-import Select from '../Select';
-import { BoxIcon, ChevronDownIcon, EyeCloseIcon, EyeIcon, TimeIcon } from '../../../icons';
+//import Select from '../Select';
+import { BoxIcon } from '../../../icons';
 import DatePicker from '@/components/form/date-picker';
 import TextArea from '../input/TextArea';
 import Button from '@/components/ui/button/Button';
 
 export default function DefaultInputs() {
   const [message, setMessage] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const options = [
-    { value: "marketing", label: "Marketing" },
-    { value: "template", label: "Template" },
-    { value: "development", label: "Development" },
-  ];
-  const handleSelectChange = (value: string) => {
-    console.log("Selected value:", value);
-  };
+  //const [showPassword, setShowPassword] = useState(false);
+ //const options = [
+   // { value: "marketing", label: "Marketing" },
+  //  { value: "template", label: "Template" },
+  //  { value: "development", label: "Development" },
+  //];
+  //const handleSelectChange = (value: string) => {
+    //console.log("Selected value:", value);
+  //};
   return (
     <ComponentCard title="Default Inputs">
       <div className="space-y-6">
