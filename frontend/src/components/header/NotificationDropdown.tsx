@@ -7,7 +7,7 @@ import { DropdownItem } from "../ui/dropdown/DropdownItem";
 
 export default function NotificationDropdown() {
   const [isOpen, setIsOpen] = useState(false);
-  const [notifying, setNotifying] = useState(true);
+  //const [notifying, setNotifying] = useState(true);
 
   function toggleDropdown() {
     setIsOpen(!isOpen);
@@ -17,10 +17,10 @@ export default function NotificationDropdown() {
     setIsOpen(false);
   }
 
-  const handleClick = () => {
-    toggleDropdown();
-    setNotifying(false);
-  };
+  //const handleClick = () => {
+    //toggleDropdown();
+    //setNotifying(false);
+  //};
   return (
     <div className="relative">
       {/* <button

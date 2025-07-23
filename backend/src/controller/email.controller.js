@@ -2,8 +2,11 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { HOST, PORT } from "../config/configEnv.js";
 import { emailConfig } from "../config/configEnv.js";
 import { sendEmail } from "../services/email.service.js";
+import { AppDataSource } from '../config/configDb.js';
+import CampaignSchema from '../entity/campaign.entity.js';
 import {
     handleErrorServer,
     handleSuccess,
@@ -21,12 +24,12 @@ export const sendCustomEmail = async (req, res) => {
     const campaignId = "camp1";
     const userId = encodeURIComponent(email);
 
-    const trackingLink = `http://localhost:3000/api/email/track/${campaignId}/${userId}`;
+    const trackingLink = `http://${HOST}:${PORT}/api/email/track/${campaignId}/${userId}`;
 
     const htmlMessage = `
         <p>${message}</p>
-        <p><a href="${trackingLink}">Haz clic aquí para revisar</a></p>
-    `;
+        `;
+        /* <p><a href="${trackingLink}">Haz clic aquí para revisar</a></p> */
 
     try {
         const info = await sendEmail(
@@ -59,7 +62,7 @@ export const trackClick = (req, res) => {
 
     fs.mkdirSync("logs", { recursive: true });
 
-    fs.appendFile(logPath, logLine, (err) => {
+    fs.appendFile(logPath, logLine, async (err) => {
         if (err) {
             console.error("Error al registrar clic:", err);  
         } else {
@@ -69,10 +72,26 @@ export const trackClick = (req, res) => {
             console.log(logLine);
             console.log("^^^^^^^^^^^^^^^^^^^^^^");
 
+            try {
+                const campaignRepository = AppDataSource.getRepository(CampaignSchema.options.name);
+                // campaignId viene de la URL, que es el 'name' de la página clonada
+                const campaign = await campaignRepository.findOne({ where: { campaignName: campaignId } });
+
+                if (campaign) {
+                    campaign.clicked += 1; // Incrementar el contador de clics
+                    await campaignRepository.save(campaign);
+                    console.log(`Clic registrado para la campaña '${campaignId}'. Total clics: ${campaign.clicked}`);
+                } else {
+                    console.warn(`Campaña con nombre '${campaignId}' no encontrada para actualizar clics.`);
+                }
+            } catch (dbError) {
+                console.error("Error al actualizar el contador de clics en la DB:", dbError);
+            }
+
         }
     });
 
-    const redirectURL = `http://localhost:5173/${campaignId}/index.html`;
+    const redirectURL = `http://${HOST}:1607/${campaignId}/index.html`;
     res.redirect(redirectURL);
 };
 

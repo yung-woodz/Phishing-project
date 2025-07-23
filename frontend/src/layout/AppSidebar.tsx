@@ -1,20 +1,16 @@
 "use client";
 import React, { useEffect, useRef, useState,useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
+//import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
-import {
-  BoxCubeIcon,
+import { 
   CalenderIcon,
   ChevronDownIcon,
   GridIcon,
   HorizontaLDots,
-  ListIcon,
-  PageIcon,
-  PieChartIcon,
-  PlugInIcon,
   TableIcon,
+  PageIcon,
   UserCircleIcon,
 } from "../icons/index";
 import SidebarWidget from "./SidebarWidget";
@@ -47,20 +43,20 @@ const navItems: NavItem[] = [
     icon: <PageIcon />,
     subItems: [
       { name: "Create Phishing", path: "/create-phishing", pro: false },
-      { name: "History", path: "/error-404", pro: false },
+      { name: "History", path: "/basic-tables", pro: false },
     ],
   },
  /*  {
     name: "Forms",
     icon: <ListIcon />,
     subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
-  },
-  {
+  },*/
+  /* {
     name: "Tables",
     icon: <TableIcon />,
     subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
-  },
-   */
+  }, */
+   
 ];
 
 const othersItems: NavItem[] = [

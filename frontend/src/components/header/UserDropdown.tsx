@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+//import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
@@ -8,10 +8,10 @@ import { DropdownItem } from "../ui/dropdown/DropdownItem";
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
 
-function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-  e.stopPropagation();
-  setIsOpen((prev) => !prev);
-}
+//function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+  //e.stopPropagation();
+  //setIsOpen((prev) => !prev);
+//}
 
   function closeDropdown() {
     setIsOpen(false);

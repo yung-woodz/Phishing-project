@@ -49,7 +49,7 @@ export default function CreatePhishingPage() {
       // 2. Generar link de rastreo
       const campaignId = cloneForm.name;
       const userId = form.email;
-      const trackingLink = `http://localhost:3000/api/email/track/${campaignId}/${userId}`;
+      const trackingLink = `http://146.83.198.35:1606/api/email/track/${campaignId}/${userId}`;
 
       // 3. Adjuntar link al cuerpo del mensaje
       const updatedForm = {
