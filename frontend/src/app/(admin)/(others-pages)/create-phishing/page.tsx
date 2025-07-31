@@ -39,26 +39,16 @@ export default function CreatePhishingPage() {
     setForm({ ...form, message: value });
   };
 
-  const handleSubmit = async () => {
+   const handleSubmit = async () => {
     try {
       setLoading(true);
 
-      // 1. Clonar la página
       await clonePage(cloneForm);
 
-      // 2. Generar link de rastreo
       const campaignId = cloneForm.name;
-      const userId = form.email;
-      const trackingLink = `http://146.83.198.35:1606/api/email/track/${campaignId}/${userId}`;
 
-      // 3. Adjuntar link al cuerpo del mensaje
-      const updatedForm = {
-        ...form,
-        message: `${form.message}\n\n🔗 Accede aquí: ${trackingLink}`,
-      };
+      const result = await sendPhishingEmail(form);
 
-      // 4. Enviar correo
-      const result = await sendPhishingEmail(updatedForm);
       setResponse(result.message || 'Correo enviado!!');
     } catch (error) {
       console.error(error);

