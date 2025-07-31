@@ -8,7 +8,7 @@ import { connectDB } from "../src/config/configDb.js";
 async function setupServer() {
   const app = express();
   app.use(cors({
-    origin: "http://localhost:443",
+    origin: "http://localhost:3001",
     credentials: true,
   }));
   app.disable("x-powered-by");

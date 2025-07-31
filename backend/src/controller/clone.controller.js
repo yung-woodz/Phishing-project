@@ -76,8 +76,8 @@ export const clonePage = async (req, res) => {
         }, scriptToInject);
 
         const html = await page.content();
-
-        const folderPath = path.resolve(`../frontend/public/${name}`);
+        
+        const folderPath = path.resolve(`../../frontend/public/${name}`);
         fs.mkdirSync(folderPath, { recursive: true });
         fs.writeFileSync(`${folderPath}/index.html`, html);
 
@@ -85,7 +85,7 @@ export const clonePage = async (req, res) => {
 
 	// PRUEBA
 
-	exec('pm2 restart 1', (error, stdout, stderr) => {
+	exec('docker restart frontend', (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error al reiniciar frontend: ${error.message}`);
             }

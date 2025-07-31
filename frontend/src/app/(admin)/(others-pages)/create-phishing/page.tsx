@@ -45,8 +45,6 @@ export default function CreatePhishingPage() {
 
       await clonePage(cloneForm);
 
-      const campaignId = cloneForm.name;
-
       const result = await sendPhishingEmail(form);
 
       setResponse(result.message || 'Correo enviado!!');

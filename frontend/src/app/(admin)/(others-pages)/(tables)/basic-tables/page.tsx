@@ -5,15 +5,6 @@ import BasicTableOne, { Campaign } from "@/components/tables/BasicTableOne";
 import React, { useState, useEffect } from "react";
 import { getCampaigns } from '@/service/campaign.service'; 
 
-/*
-export const metadata: Metadata = {
-  title: "Historial de Campañas",
-  description:
-    "Historial de Campañas de Phishing realizadas",
-  // otras propiedades de metadata
-};
-*/
-
 export default function BasicTables() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [loading, setLoading] = useState(true);
@@ -30,7 +21,7 @@ export default function BasicTables() {
         const data = await getCampaigns(); 
         setCampaigns(data); // Actualiza el estado con los datos obtenidos
 
-      } catch (err: any) {
+      } catch (err: unknown) {
         // Captura y registra cualquier error durante la carga
         console.error("Error al cargar campañas en el componente:", err);
         setError("Error al cargar el historial de campañas. Por favor, inténtalo de nuevo más tarde.");
@@ -69,7 +60,6 @@ export default function BasicTables() {
     <div>
       <PageBreadcrumb pageTitle="Historial de Campañas" />
       <div className="space-y-6">
-        {/* Pasa las campañas cargadas a BasicTableOne para su visualización */}
         <BasicTableOne campaigns={campaigns} />
       </div>
     </div>

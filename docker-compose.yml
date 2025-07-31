@@ -1,24 +1,50 @@
 version: '3.9'
-
 services:
   backend:
     build:
       context: ./backend
     container_name: backend
     ports:
-      - "1606:1606"
+      - "3000:3000"
     volumes:
       - ./backend/logs:/app/logs
+      - public-pages:/frontend/public
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - NODE_ENV=production
+      - DB_HOST=postgres
+      - DB_USERNAME=dilan
+      - PASSWORD=julian6261
+      - DATABASE=proyecto
+      - SESSION_SECRET=xNz72z8IlqBNdRvtpiBRbRcZF8aKhGGrgUBYSL9ZPbcQ4gRUbPMvF1mBGK5ZY3jS
+      - EMAIL_USER=dilan.toro40@gmail.com
+      - EMAIL_PASS=vlah tlfn hyth jhul
     restart: always
+    depends_on:
+      - postgres
 
   frontend:
     build:
       context: ./frontend
     container_name: frontend
     ports:
-      - "3000:3000"
+      - "3001:3001"
+    volumes:
+      - public-pages:/Phishing-project/frontend/public
     environment:
       - NODE_ENV=production
     restart: always
+
+  postgres:
+    image: postgres:15.2
+    environment:
+      POSTGRES_USER: dilan
+      POSTGRES_PASSWORD: julian6261
+      POSTGRES_DB: proyecto
+    volumes:
+      - pgdata:/var/lib/postgres/data
+    ports:
+      - "5432:5432"
+volumes:
+  pgdata:
+  public-pages:

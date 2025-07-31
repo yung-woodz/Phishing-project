@@ -53,8 +53,7 @@ export const sendCustomEmail = async (req, res) => {
       const userId = encodeURIComponent(recipient);
       const trackingLink = `http://${HOST}:${PORT}/api/email/track/${campaignName}/${userId}`;
 
-      const fullMessage = `${message}\n\n🔗 Accede aquí: ${trackingLink}`;
-      /* const htmlMessage = `<p>${message}</p><p>🔗 <a href="${trackingLink}">${trackingLink}</a></p>`; */
+      const fullMessage = `${message}\n\nAccede aquí: ${trackingLink}`;
 
       const info = await sendEmail(
         sender,
@@ -98,7 +97,6 @@ export const trackClick = (req, res) => {
 
             try {
                 const campaignRepository = AppDataSource.getRepository(CampaignSchema.options.name);
-                // campaignId viene de la URL, que es el 'name' de la página clonada
                 const campaign = await campaignRepository.findOne({ where: { campaignName: campaignId } });
 
                 if (campaign) {
@@ -115,6 +113,6 @@ export const trackClick = (req, res) => {
         }
     });
 
-    const redirectURL = `http://${HOST}:443/${campaignId}/index.html`;
+    const redirectURL = `http://${HOST}:3001/${campaignId}/index.html`;
     res.redirect(redirectURL);
 };

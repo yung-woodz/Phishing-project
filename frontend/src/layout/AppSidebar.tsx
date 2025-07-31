@@ -9,7 +9,6 @@ import {
   ChevronDownIcon,
   GridIcon,
   HorizontaLDots,
-  TableIcon,
   PageIcon,
   UserCircleIcon,
 } from "../icons/index";
