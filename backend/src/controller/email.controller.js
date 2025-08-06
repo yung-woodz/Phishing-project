@@ -66,6 +66,12 @@ export const sendCustomEmail = async (req, res) => {
       results.push({ recipient, info });
     }
 
+    const sentCount = emailList.length;
+    const campaignToUpdate = latestCampaign[0];
+
+    campaignToUpdate.totalSent += sentCount;
+    await campaignRepository.save(campaignToUpdate);
+
     handleSuccess(res, 200, "Correos enviados correctamente", results);
   } catch (err) {
     console.error("Error al enviar correos:", err);

@@ -18,6 +18,7 @@ export const DB_USERNAME = process.env.DB_USERNAME;
 export const PASSWORD = process.env.PASSWORD;
 export const DATABASE = process.env.DATABASE;
 export const SESSION_SECRET = process.env.SESSION_SECRET;
+export const cookieKey = process.env.cookieKey;
 export const emailConfig = {
     service: "gmail",
     user: process.env.EMAIL_USER,

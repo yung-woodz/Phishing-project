@@ -58,11 +58,11 @@ export default function CreatePhishingPage() {
 
   return (
     <div>
-      <PageBreadcrumb pageTitle="Create Phishing" />
+      <PageBreadcrumb pageTitle="Campaña de Phishing" />
       <div className="min-h-screen rounded-2xl border border-gray-200 bg-white px-5 py-7 dark:border-gray-800 dark:bg-white/[0.03] xl:px-10 xl:py-12">
         <div className="mx-auto w-full max-w-[630px] text-left">
           <h3 className="mb-6 text-2xl font-semibold text-gray-800 dark:text-white/90">
-            Schedule Your Phishing Campaign Here
+            Crear Campaña de Phishing
           </h3>
 
           <div className="space-y-6">

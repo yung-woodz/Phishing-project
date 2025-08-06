@@ -11,29 +11,25 @@ export default function BasicTables() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Función asíncrona para obtener los datos de las campañas
     const fetchCampaignData = async () => {
       try {
-        setLoading(true); // Activa el estado de carga
-        setError(null); // Limpia cualquier error previo
+        setLoading(true);
+        setError(null);
         
-        // Llama a la función del servicio para obtener las campañas desde el backend
         const data = await getCampaigns(); 
-        setCampaigns(data); // Actualiza el estado con los datos obtenidos
+        setCampaigns(data);
 
       } catch (err: unknown) {
-        // Captura y registra cualquier error durante la carga
         console.error("Error al cargar campañas en el componente:", err);
         setError("Error al cargar el historial de campañas. Por favor, inténtalo de nuevo más tarde.");
       } finally {
-        setLoading(false); // Desactiva el estado de carga al finalizar (éxito o error)
+        setLoading(false);
       }
     };
 
-    fetchCampaignData(); // Ejecuta la función de carga de datos al montar el componente
-  }, []); // El array de dependencias vacío asegura que useEffect se ejecute solo una vez al montar el componente
+    fetchCampaignData();
+  }, []); 
 
-  // Renderizado condicional basado en el estado de carga y error
   if (loading) {
     return (
       <div>
