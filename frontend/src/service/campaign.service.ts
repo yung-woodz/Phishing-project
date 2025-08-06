@@ -4,15 +4,16 @@ import { Campaign as CampaignInterface } from '@/components/tables/BasicTableOne
 interface CampaignApiResponse extends Omit<CampaignInterface, 'startTime' | 'createdAt' | 'updatedAt'> {
   startTime: string;
   createdAt: string;
-  updatedAt: string | null; // updated_at puede ser null si no se ha actualizado
+  updatedAt: string | null;
 }
 
 /**
  * Obtiene el historial de campañas desde el backend.
  * Este servicio solo invoca la API y adapta ligeramente los datos para el frontend.
  * @returns {Promise<CampaignInterface[]>} Una promesa que resuelve con un array de objetos Campaign.
- * @throws {Error} Si la solicitud a la API falla.
+ * @throws {Error}
  */
+
 export const getCampaigns = async (): Promise<CampaignInterface[]> => {
   try {
     const res = await axios.get<CampaignApiResponse[]>('/campaigns/campaigns');

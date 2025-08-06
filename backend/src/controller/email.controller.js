@@ -7,7 +7,9 @@ import { emailConfig } from "../config/configEnv.js";
 import { sendEmail } from "../services/email.service.js";
 import { AppDataSource } from '../config/configDb.js';
 import CampaignSchema from '../entity/campaign.entity.js';
+import { emailValidation } from "../validations/email.validation.js";
 import {
+    handleErrorClient,
     handleErrorServer,
     handleSuccess,
     } from "../handlers/responseHandlers.js";
@@ -16,39 +18,66 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export const sendCustomEmail = async (req, res) => {
+  const { email, subject, message, fromName } = req.body;
+  const sender = `"${fromName}" <${emailConfig.user}>`;
 
-    const { email, subject, message, fromName } = req.body;
+  const emailList = email.split(',').map(e => e.trim()).filter(e => e);
+  const results = [];
 
-    const sender = `"${fromName}" <${emailConfig.user}>`;
+  // Validación de los datos
+  const { error } = emailValidation.validate(req.body);
+  if (error) {
+    return handleErrorClient(res, 400, "Error al validar envio del correo", error.message);
+  }
 
-    const campaignId = "camp1";
-    const userId = encodeURIComponent(email);
+  try {
+    // Obtener la última campaña creada
+    const campaignRepository = AppDataSource.getRepository(CampaignSchema.options.name);
+    const latestCampaign = await campaignRepository.find({
+      order: { createdAt: 'DESC' },
+      take: 1,
+    });
 
-    const trackingLink = `http://${HOST}:${PORT}/api/email/track/${campaignId}/${userId}`;
-
-    const htmlMessage = `
-        <p>${message}</p>
-        `;
-        /* <p><a href="${trackingLink}">Haz clic aquí para revisar</a></p> */
-
-    try {
-        const info = await sendEmail(
-            sender,
-            email,
-            subject,
-            message,
-            htmlMessage
-        );
-
-        handleSuccess(res, 200, "Correo enviado con exito!!", info);
-
-    } catch (error) {
-
-        handleErrorServer(res, 500, "Error durante el envío del correo", error.message);
-        
+    if (!latestCampaign || latestCampaign.length === 0) {
+      return handleErrorClient(res, 404, "No se encontró ninguna campaña activa.");
     }
 
-}
+    const campaignName = latestCampaign[0]?.campaignName;
+
+    if (!campaignName) {
+      return handleErrorClient(res, 500, "La campaña no tiene nombre válido.");
+    }
+
+    // Enviar un correo por cada destinatario con su link personalizado
+    for (const recipient of emailList) {
+      const userId = encodeURIComponent(recipient);
+      const trackingLink = `http://${HOST}:${PORT}/api/email/track/${campaignName}/${userId}`;
+
+      const fullMessage = `${message}\n\nAccede aquí: ${trackingLink}`;
+
+      const info = await sendEmail(
+        sender,
+        recipient,
+        subject,
+        fullMessage
+        /* htmlMessage */
+      );
+
+      results.push({ recipient, info });
+    }
+
+    const sentCount = emailList.length;
+    const campaignToUpdate = latestCampaign[0];
+
+    campaignToUpdate.totalSent += sentCount;
+    await campaignRepository.save(campaignToUpdate);
+
+    handleSuccess(res, 200, "Correos enviados correctamente", results);
+  } catch (err) {
+    console.error("Error al enviar correos:", err);
+    handleErrorServer(res, 500, "Error al enviar los correos", err.message);
+  }
+};
 
 export const trackClick = (req, res) => {
     const { campaignId, userId } = req.params;
@@ -74,7 +103,6 @@ export const trackClick = (req, res) => {
 
             try {
                 const campaignRepository = AppDataSource.getRepository(CampaignSchema.options.name);
-                // campaignId viene de la URL, que es el 'name' de la página clonada
                 const campaign = await campaignRepository.findOne({ where: { campaignName: campaignId } });
 
                 if (campaign) {
@@ -91,29 +119,6 @@ export const trackClick = (req, res) => {
         }
     });
 
-    const redirectURL = `http://${HOST}:1607/${campaignId}/index.html`;
+    const redirectURL = `http://${HOST}:3001/${campaignId}/index.html`;
     res.redirect(redirectURL);
-};
-
-export const simularLogin = (req, res) => {
-    const { rut, password } = req.body;
-    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    const agent = req.headers['user-agent'];
-    const timestamp = new Date().toISOString();
-
-    const logLine = `${timestamp} | [LOGIN SIMULADO] RUT: ${rut} | PASS: ${password} | IP: ${ip} | Agent: ${agent}\n`;
-
-    const logPath = path.resolve(__dirname, "../../logs/clicks.log");
-
-
-    fs.appendFile(logPath, logLine, (err) => {
-        if (err) {
-            console.error("Error al registrar login u.u :", err);
-            return res.status(500).json({ error: "Error al registrar" });
-        }
-
-        console.log("Login registrado:");
-        console.log(logLine);
-        res.status(200).json({ success: true });
-    });
 };

@@ -9,7 +9,6 @@ import {
   ChevronDownIcon,
   GridIcon,
   HorizontaLDots,
-  TableIcon,
   PageIcon,
   UserCircleIcon,
 } from "../icons/index";
@@ -26,24 +25,24 @@ const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Dashboard",
-    subItems: [{ name: "Ecommerce", path: "/", pro: false }],
+    subItems: [{ name: "Inicio", path: "/", pro: false }],
   },
   {
     icon: <CalenderIcon />,
-    name: "Calendar",
+    name: "Calendario",
     path: "/calendar",
   },
   {
     icon: <UserCircleIcon />,
-    name: "User Profile",
+    name: "Perfil",
     path: /* "/profile" */"/error-404",
   },
   {
-    name: "Campaign",
+    name: "Campañas",
     icon: <PageIcon />,
     subItems: [
-      { name: "Create Phishing", path: "/create-phishing", pro: false },
-      { name: "History", path: "/basic-tables", pro: false },
+      { name: "Crear Phishing", path: "/create-phishing", pro: false },
+      { name: "Historial", path: "/basic-tables", pro: false },
     ],
   },
  /*  {

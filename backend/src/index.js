@@ -1,27 +1,70 @@
-import express from "express";
+"use strict";
 import cors from "cors";
 import morgan from "morgan";
-import indexRoutes from "../src/routes/index.routes.js";
-import { PORT, HOST } from "../src/config/configEnv.js"
-import { connectDB } from "../src/config/configDb.js";
+import cookieParser from "cookie-parser";
+import indexRoutes from "./routes/index.routes.js";
+import session from "express-session";
+import passport from "passport";
+import express, { json, urlencoded } from "express";
+import { cookieKey, HOST, PORT } from "./config/configEnv.js";
+import { connectDB } from "./config/configDb.js";
+import { passportJwtSetup } from "./auth/passport.auth.js";
 
 async function setupServer() {
-  const app = express();
-  app.use(cors({
-    origin: "http://146.83.198.35:1607",
-    credentials: true,
-  }));
-  app.disable("x-powered-by");
+  try {
+    const app = express();
 
-  app.use(express.json());
-  app.use(morgan("dev"));
+    app.disable("x-powered-by");
 
-  app.use("/api", indexRoutes);
-  app.use("/public", express.static("public"));
+    app.use(cors({
+      origin: "http://localhost:3001",
+      credentials: true,
+    }));
 
-  app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://${HOST}:${PORT}/api`);
-  });
+    app.use(
+      urlencoded({
+        extended: true,
+        limit: "1mb",
+      }),
+    );
+
+    app.use(
+      json({
+        limit: "1mb",
+      }),
+    );
+
+    app.use(cookieParser());
+
+    app.use(morgan("dev"));
+
+    app.use(
+      session({
+        secret: cookieKey,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+          secure: false,
+          httpOnly: true,
+          sameSite: "strict",
+        },
+      }),
+    );
+
+    app.use(passport.initialize());
+    app.use(passport.session());
+
+    passportJwtSetup();
+
+    app.use("/api", indexRoutes);
+    app.use("/public", express.static("public"));
+
+    app.listen(PORT, () => {
+      console.log(`=> Servidor corriendo en http://${HOST}:${PORT}/api`);
+    });
+  } catch (error) {
+    console.log("Error en index.js -> setupServer(), el error es: ", error);
+  }
 }
 
 async function setupAPI() {

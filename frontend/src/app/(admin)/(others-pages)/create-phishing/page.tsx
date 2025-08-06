@@ -39,26 +39,14 @@ export default function CreatePhishingPage() {
     setForm({ ...form, message: value });
   };
 
-  const handleSubmit = async () => {
+   const handleSubmit = async () => {
     try {
       setLoading(true);
 
-      // 1. Clonar la página
       await clonePage(cloneForm);
 
-      // 2. Generar link de rastreo
-      const campaignId = cloneForm.name;
-      const userId = form.email;
-      const trackingLink = `http://146.83.198.35:1606/api/email/track/${campaignId}/${userId}`;
+      const result = await sendPhishingEmail(form);
 
-      // 3. Adjuntar link al cuerpo del mensaje
-      const updatedForm = {
-        ...form,
-        message: `${form.message}\n\n🔗 Accede aquí: ${trackingLink}`,
-      };
-
-      // 4. Enviar correo
-      const result = await sendPhishingEmail(updatedForm);
       setResponse(result.message || 'Correo enviado!!');
     } catch (error) {
       console.error(error);
@@ -70,11 +58,11 @@ export default function CreatePhishingPage() {
 
   return (
     <div>
-      <PageBreadcrumb pageTitle="Create Phishing" />
+      <PageBreadcrumb pageTitle="Campaña de Phishing" />
       <div className="min-h-screen rounded-2xl border border-gray-200 bg-white px-5 py-7 dark:border-gray-800 dark:bg-white/[0.03] xl:px-10 xl:py-12">
         <div className="mx-auto w-full max-w-[630px] text-left">
           <h3 className="mb-6 text-2xl font-semibold text-gray-800 dark:text-white/90">
-            Schedule Your Phishing Campaign Here
+            Crear Campaña de Phishing
           </h3>
 
           <div className="space-y-6">

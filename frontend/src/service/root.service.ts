@@ -1,5 +1,5 @@
 import axios from 'axios';
-/* import cookies from 'js-cookie'; */
+import cookies from 'js-cookie';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
 
@@ -11,7 +11,7 @@ const API = axios.create({
   withCredentials: true,
 });
 
-/* API.interceptors.request.use(
+API.interceptors.request.use(
   (config) => {
     const token = cookies.get('jwt-auth');
     if (token) {
@@ -20,6 +20,6 @@ const API = axios.create({
     return config;
   },
   (error) => Promise.reject(error)
-); */
+);
 
 export default API;

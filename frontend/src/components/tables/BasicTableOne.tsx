@@ -1,41 +1,37 @@
 // BasicTableOne.tsx
 import React from "react";
+import Link from "next/link";
 import {
   Table,
   TableBody,
-  TableCell, // Mantener la importación para el resto de las celdas
+  TableCell,
   TableHeader,
   TableRow,
-} from "../ui/table"; // Asegúrate de que estos componentes existan en tu proyecto
+} from "../ui/table";
 
-import Badge from "../ui/badge/Badge"; // Asegúrate de que el componente Badge esté disponible
+import Badge from "../ui/badge/Badge";
 
-// Define la interfaz para los datos de la campaña
-// Esta interfaz debe coincidir con la estructura de datos que tu backend envía
-// y que el campaign.service.ts transforma a objetos Date.
 export interface Campaign {
-  id: string; // Identificador único de la campaña (UUID de PostgreSQL)
-  campaignName: string; // Nombre de la campaña (corresponde a 'name' del formulario)
-  pageUrl: string; // URL de la página clonada (corresponde a 'url' del formulario)
-  startTime: Date; // Fecha y hora de inicio de la campaña (ya convertida a objeto Date por el servicio)
-  totalSent: number; // Total de correos enviados
-  clicked: number; // Total de clics en el enlace de rastreo
-  createdAt: Date; // Marca de tiempo de creación del registro
-  updatedAt: Date; // Marca de tiempo de última actualización del registro
+  id: string;
+  campaignName: string;
+  pageUrl: string;
+  startTime: Date;
+  totalSent: number;
+  clicked: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-// Propiedades para el componente BasicTableOne
 interface BasicTableOneProps {
-  campaigns: Campaign[]; // Array de campañas a mostrar
+  campaigns: Campaign[]; 
 }
 
 export default function BasicTableOne({ campaigns }: BasicTableOneProps) {
-  // Función para determinar el estado de la campaña
-  // Una campaña se considera 'Expired' si han pasado más de 4 horas desde su startTime.
-  const getCampaignStatus = (startTime: Date): 'Active' | 'Expired' => {
-    const fourHoursInMillis = 4 * 60 * 60 * 1000; // 4 horas en milisegundos
+
+  const getCampaignStatus = (startTime: Date): 'Activo' | 'Expirado' => {
+    const fourHoursInMillis = 4 * 60 * 60 * 1000; 
     const expirationTime = new Date(startTime.getTime() + fourHoursInMillis);
-    return new Date() < expirationTime ? 'Active' : 'Expired';
+    return new Date() < expirationTime ? 'Activo' : 'Expirado';
   };
 
   return (
@@ -50,37 +46,37 @@ export default function BasicTableOne({ campaigns }: BasicTableOneProps) {
                   isHeader
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xm dark:text-gray-400"
                 >
-                  Campaign Name
+                  Nombre Campaña
                 </TableCell>
                 <TableCell
                   isHeader
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xm dark:text-gray-400"
                 >
-                  Page
+                  Página
                 </TableCell>
                 <TableCell
                   isHeader
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xm dark:text-gray-400"
                 >
-                  Date
+                  Fecha
                 </TableCell>
                 <TableCell
                   isHeader
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xm dark:text-gray-400"
                 >
-                  Status
+                  Estado
                 </TableCell>
                 <TableCell
                   isHeader
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xm dark:text-gray-400"
                 >
-                  Total Sent
+                  Total Enviados
                 </TableCell>
                 <TableCell
                   isHeader
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xm dark:text-gray-400"
                 >
-                  Clicked
+                  Cliqueados
                 </TableCell>
               </TableRow>
             </TableHeader>
@@ -90,7 +86,6 @@ export default function BasicTableOne({ campaigns }: BasicTableOneProps) {
               {campaigns.length === 0 ? (
                 // Mostrar mensaje si no hay campañas
                 <TableRow>
-                  {/* CORRECCIÓN: Usar <td> nativo para aplicar colSpan */}
                   <td colSpan={6} className="px-5 py-4 text-center text-gray-500 dark:text-gray-400">
                     No hay campañas disponibles.
                   </td>
@@ -102,9 +97,12 @@ export default function BasicTableOne({ campaigns }: BasicTableOneProps) {
                   return (
                     <TableRow key={campaign.id}>
                       <TableCell className="px-5 py-4 sm:px-6 text-start">
-                        <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                          {campaign.campaignName} {/* Muestra el nombre de la campaña */}
-                        </span>
+                        <Link
+                          href={`/campaign/${campaign.campaignName}/details`}
+                          className="block font-medium text-brand-500 text-theme-sm hover:underline dark:text-brand-400"
+                        >
+                          {campaign.campaignName}
+                        </Link>
                       </TableCell>
                       <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                         {campaign.pageUrl} {/* Muestra la URL de la página clonada */}
@@ -116,12 +114,12 @@ export default function BasicTableOne({ campaigns }: BasicTableOneProps) {
                         <Badge
                           size="sm"
                           color={
-                            status === "Active"
-                              ? "success" // Color para estado 'Active'
-                              : "error"   // Color para estado 'Expired'
+                            status === "Activo"
+                              ? "success"
+                              : "error"
                           }
                         >
-                          {status} {/* Muestra el estado calculado */}
+                          {status}
                         </Badge>
                       </TableCell>
                       <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
